@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Update Account</title>
+  </head>
+
+  <body>
+    <div class="wrapper">
+        <form th:action="@{/update-akun/{id}(id=${regis.id})}"  th:object="${regis}" method="post">
+          <h1>Edit Akun</h1>
+          <div class="input-box">
+            <label>Nama Akun :</label>
+            <input type="text" th:field="${regis.username}" />
+            <div
+              th:if="${usernameError}"
+              class="error"
+              th:text="${usernameError}"
+            ></div>
+            <br />
+            <label>Kata Sandi :</label>
+            <input type="password" th:field="${regis.password}" /> <br />
+            <div
+              th:if="${passwordError}"
+              class="error"
+              th:text="${passwordError}"
+            ></div>
+          </div>
+          <button type="submit">Daftar</button>
+        </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Jurnal</title>
+    </head>
+
+    <body>
+        <h1>Jurnal Perusahaan</h1>
+        <div class="jurnal">
+            <h2>Jurnal Penerbitan Obligasi</h2>
+            <table>
+              <tbody>
+                <tr th:each="@{/journal/{id}(id=${transaction.id})}"></tr>
+                  <td th:text="${transaction.tanggalTerbit}"></td>
+                  <th scope="col">Kas</th>
+                  <td th:text="${journal.dPenerbitanKas} "></td>
+                  <th scope="col"></th>
+                  <td th:text="${journal.dPenerbitan} "></td>
+                  <th scope="col">Utang Obligasi</th>
+                  <td th:text="${journal.kPenerbitanUtangObligasi} "></td>
+                  <th scope="col"></th>
+                  <td th:text="${journal.kPenerbitan} "></td>
+                  </tr>
+              </tbody>
+            </table>
+            </div>
+            <div class="jurnal">
+              <h2>Jurnal Pembayaran Bunga</h2>
+              <table>
+                <tbody>
+                  <tr th:each="journal : ${journal}">
+                    <th scope="col"></th>
+                    <td th:text="${journal.dBayarBungaAwal}"></td>
+                    <th scope="col"></th>
+                    <td th:text="${journal.kBayarBungaAwal}"></td>
+                    <th scope="col"></th>
+                    <td th:text="${journal.dBayarBungaAkhir}"></td>
+                    <th scope="col"></th>
+                    <td th:text="${journal.kBayarBungaAkhir}"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="jurnal">
+              <h2>Jurnal Saat Akhir Tahun</h2>
+              <table>
+                <tbody>
+                  <tr th:each="journal : ${journal}">
+                    <th scope="col"></th>
+                    <td th:text="${journal.dAkhirTahun}"></td>
+                    <th scope="col"></th>
+                    <td th:text="${journal.kAkhirTahun}"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="jurnal">
+              <h2>Jurnal Saat Pelunasan</h2>
+              <table>
+                <tbody>
+                  <tr th:each="journal : ${journal}">
+                    <th scope="col"></th>
+                    <td th:text="${journal.dPelunasan}"></td>
+                    <th scope="col"></th>
+                    <td th:text="${journal.kPelunasan}"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </body>
+</html>
