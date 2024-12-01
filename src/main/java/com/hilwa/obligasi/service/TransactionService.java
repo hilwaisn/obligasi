@@ -26,4 +26,16 @@ public class TransactionService {
     public Transaction findById(Integer id) {
         return transactionRepository.findById(id).orElse(null);
     }
+
+    public List<Transaction> findByNama(String name){
+        return transactionRepository.findAllByNamaPerusahaanContainingIgnoreCase(name);
+    }
+
+    public List<Transaction> findAllByOrderByDesc(){
+        return transactionRepository.findAllByOrderByTanggalTerbitDesc();
+    }
+
+    public List<Transaction> findAllByOrderByAsalAsc(){
+        return transactionRepository.findAllByOrderByTanggalTerbitAsc();
+    }
 }

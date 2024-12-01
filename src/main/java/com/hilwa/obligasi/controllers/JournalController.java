@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.hilwa.obligasi.models.Journal;
 import com.hilwa.obligasi.models.Transaction;
 import com.hilwa.obligasi.service.JournalService;
@@ -18,7 +20,7 @@ public class JournalController {
 
     @GetMapping("journal")
     public String journal(Model model) {
-        List<Journal> journals = journalService.getAllJournal();
+        List<Transaction> journals = transactionService.getAllTransaction();
         model.addAttribute("journal", journals);
         return "journal";
     }
@@ -30,10 +32,20 @@ public class JournalController {
         return "list-journal";
     }
 
+    // @GetMapping("/list-journal")
+    // public String addJurnal(Model model) {
+    // List<Journal> jurnal = journalService.getAllJournal();
+    // model.addAttribute("journal", jurnal);
+
+    // List<Transaction> transactions = transactionService.getAllTransaction();
+    // model.addAttribute("transactions", transactions);
+    // return "list-journal";
+    // }
+
     @GetMapping("/journal/{id}")
-    public String addJurnal(Model model) {
-        List<Journal> jurnal = journalService.getAllJournal();
-        model.addAttribute("journal", jurnal);
+    public String getJournalById(@PathVariable Integer id, Model model) {
+        Journal journal = journalService.findJournalById(id);
+        model.addAttribute("journal", journal);
         return "journal";
-    }   
+    }
 }

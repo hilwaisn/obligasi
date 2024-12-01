@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.hilwa.obligasi.models.Transaction;
 import com.hilwa.obligasi.service.TransactionService;
 @Controller
@@ -32,7 +34,7 @@ public class TransactionController {
     @PostMapping("save-transaksi")
     public String saveTransaksi(@ModelAttribute("transaksi") Transaction transactions) {
         transactionService.save(transactions);
-        return "redirect:/journal";
+        return "redirect:/home";
     }
 
     @GetMapping("/delete-transaction/{id}")
@@ -59,11 +61,35 @@ public class TransactionController {
             update.setLembarUtang(transaksi.getLembarUtang());
             update.setBunga(transaksi.getBunga());
             update.setTanggalBayar(transaksi.getTanggalBayar());
+            update.setTanggalBayarr(transaksi.getTanggalBayarr());
             update.setJangkaWaktu(transaksi.getJangkaWaktu());
             update.setKurs(transaksi.getKurs());
+            update.setSukuBungaPasar(transaksi.getSukuBungaPasar());
             update.setHargaPenerbitan(transaksi.getHargaPenerbitan());
             transactionService.save(update);
         }
         return "redirect:/home";
     }
+
+    @GetMapping("/search-nama-perusahaan")
+    public String searchTransactionByNamaPerusahaan(@RequestParam(value = "name") String name, Model model) {
+        List<Transaction> transaksi = transactionService.findByNama(name);
+        model.addAttribute("transaction", transaksi);
+        return "home";
+    }
+
+    @GetMapping("/sort-penerbitan-desc")
+    public String sortByPenerbitanDesc(Model model) {
+        List<Transaction> transaksi = transactionService.findAllByOrderByDesc();
+        model.addAttribute("transaction", transaksi);
+        return "home";
+    }
+
+    @GetMapping("/sort-penerbitan-asc")
+    public String sortByPenerbitanAsc(Model model) {
+        List<Transaction> transaksi = transactionService.findAllByOrderByAsalAsc();
+        model.addAttribute("transaction", transaksi);
+        return "home";
+    }
+
 }

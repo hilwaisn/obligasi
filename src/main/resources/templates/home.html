@@ -6,6 +6,18 @@
     </head>
     <body>
         <h1>Selamat Datang di ObliTrack</h1>
+        <div class="cari">
+          <div class="search"> 
+              <form th:action="@{/search-nama-perusahaan}" method="get"> 
+                  <input type="text" placeholder="Search by company name...." name="name"/> 
+                  <input type="submit" value="Cari" /> 
+              </form> 
+          </div> 
+          <a th:href="@{/sort-penerbitan-desc}"> 
+              <button>Desc Tanggal Terbit</button> 
+             </a> 
+          <a th:href="@{/sort-penerbitan-asc}"> 
+          <button>Asc Tanggal Terbit</button> 
         <table>
           <thead>
             <tr>
@@ -14,10 +26,11 @@
               <th scope="col">Tanggal Penerbitan</th>
               <th scope="col">Nilai Nominal</th>
               <th scope="col">Lembar Utang</th>
-              <th scope="col">Bunga</th>>
+              <th scope="col">Bunga</th>
               <th scope="col">Tanggal Bayar Bunga</th>
               <th scope="col">Jangka Waktu</th>
               <th scope="col">Kurs</th>
+              <th scope="col">Suku Bunga Pasar</th>
               <th scope="col">Harga Penerbitan</th>
             </tr>
             </thead>
@@ -30,8 +43,10 @@
                 <td th:text="${transaction.lembarUtang}"></td>
                 <td th:text="${transaction.bunga}"></td>
                 <td th:text="${transaction.tanggalBayar}"></td>
+                <td th:text="${transaction.tanggalBayarr}"></td>
                 <td th:text="${transaction.jangkaWaktu}"></td>
                 <td th:text="${transaction.kurs}"></td>
+                <td th:text="${transaction.sukuBungaPasar}"></td>
                 <td th:text="${transaction.hargaPenerbitan}"></td>
                 <td>
                   <a th:href="@{/update-transaction/{id}(id=${transaction.id})}" class="btn-primary"

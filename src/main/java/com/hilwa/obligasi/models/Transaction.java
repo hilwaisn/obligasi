@@ -19,7 +19,9 @@ public class Transaction {
     private Integer lembarUtang;
     private Integer bunga;
     private Date tanggalBayar;
+    private Date tanggalBayarr;
     private Integer jangkaWaktu;
     private Integer kurs;
+    private Integer sukuBungaPasar;
     private Double hargaPenerbitan;
 }

@@ -9,25 +9,30 @@
         <div>
             <h1>Edit Transaksi</h1>
             <form th:action="@{/update-transaction/{id}(id=${transaction.id})}"  th:object="${transaction}" method="post">
-                <label>Nama Perusahaan      :</label>
-                <input type="text" placeholder="Masukkan nama perusahaan" th:field="${transaction.namaPerusahaan}" /> <br>
-                <label>Tanggal Penerbitan :</label>
-                <input type="date" placeholder="Masukkan tanggal penerbitan" th:field="${transaction.tanggalTerbit}" /> <br>
-                <label>Nilai Nominal       :</label>
-                <input type="text" placeholder="Masukkan nilai nominal" th:field="${transaction.nilaiNominal}" /> <br>
-                <label>Lembar Utang        :</label>
-                <input type="text" placeholder="Masukkan lembar utang" th:field="${transaction.lembarUtang}" /> <br>
-                <label>Bunga(dalam persen) :</label>
-                <input type="number" placeholder="Masukkan bunga" th:field="${transaction.bunga}" /> <br>
-                <label>Tanggal Bayar Bunga :</label>
-                <input type="date" placeholder="Masukkan tanggal bayar bunga" th:field="${transaction.tanggalBayar}" /> <br>
-                <label>Jangka Waktu(tahun) :</label>
-                <input type="text" placeholder="Masukkan jangka waktu" th:field="${transaction.jangkaWaktu}" /> <br>
-                <label>Kurs                :</label>
-                <input type="text" placeholder="Masukkan kurs" th:field="${transaction.kurs}" /> <br>
-                <label>Harga Penerbitan    :</label>
-                <input type="text" placeholder="Masukkan harga penerbitan" th:field="${transaction.hargaPenerbitan}" /> <br>
-                <button type="submit" class="ujung">Simpan</button> <br>
+                <div class="wrapper">
+                    <label>Nama Perusahaan      :</label>
+                    <input type="text" placeholder="Masukkan nama perusahaan" th:field="${transaction.namaPerusahaan}" /> <br>
+                    <label>Tanggal Penerbitan :</label>
+                    <input type="date" placeholder="Masukkan tanggal penerbitan" th:field="${transaction.tanggalTerbit}" /> <br>
+                    <label>Nilai Nominal       :</label>
+                    <input type="text" placeholder="Masukkan nilai nominal" th:field="${transaction.nilaiNominal}" /> <br>
+                    <label>Lembar Utang        :</label>
+                    <input type="text" placeholder="Masukkan lembar utang" th:field="${transaction.lembarUtang}" /> <br>
+                    <label>Bunga(dalam persen) :</label>
+                    <input type="number" placeholder="Masukkan bunga" th:field="${transaction.bunga}" /> <br>
+                    <label>Tanggal Bayar Bunga :</label>
+                    <input type="date" th:field="${transaction.tanggalBayar}" /> <br>
+                    <input type="date" th:field="${transaction.tanggalBayarr}" /> <br>
+                    <label>Jangka Waktu(tahun) :</label>
+                    <input type="text" placeholder="Masukkan jangka waktu" th:field="${transaction.jangkaWaktu}" /> <br>
+                    <label>Kurs                :</label>
+                    <input type="text" placeholder="Masukkan kurs" th:field="${transaction.kurs}" /> <br>
+                    <label>Suku Bunga Pasar    :</label>
+                    <input type="text" placeholder="Masukkan suku bunga pasar" th:field="${transaction.sukuBungaPasar}" /> <br>      
+                    <label>Harga Penerbitan    :</label>
+                    <input type="text" placeholder="Masukkan harga penerbitan" th:field="${transaction.hargaPenerbitan}" /> <br>
+                    <button type="submit" class="ujung">Simpan</button> <br>
+                </div>
             </form>
         </div>
     </body>

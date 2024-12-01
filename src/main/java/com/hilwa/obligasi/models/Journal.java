@@ -28,6 +28,6 @@ public class Journal {
     private Double kPelunasan;
 
     @ManyToOne
-    @JoinColumn(name = "transaction", referencedColumnName = "id")
+    @JoinColumn(name = "transaction_id", referencedColumnName = "id")
     private Transaction transaction;
 }

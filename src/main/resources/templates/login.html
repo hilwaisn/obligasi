@@ -6,27 +6,29 @@
   </head>
 
   <body>
-    <h1>Masuk</h1>
     <div class="wrapper">
       <form th:action="@{/home}" method="post">
-        <label>Nama Akun :</label>
-        <input
-          type="text"
-          name="username"
-          placeholder="Enter username"
-          required
-        />
-        <br />
-        <label>Kata Sandi :</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter password"
-          required
-        />
-        <br />
-        <div class="" remember-forget>
-          <label><input type="checkbox" />Ingatkan saya</label>
+        <h1>Masuk</h1>
+        <div class="input-box">
+          <label>Nama Akun :</label>
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter username"
+            required
+          />
+          <br />
+          <label>Kata Sandi :</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            required
+          />
+          <br />
+          <div class="pengingat" remember-forget>
+            <p><input type="checkbox" />Ingatkan saya</p>
+          </div>
         </div>
         <button type="submit">Masuk</button>
         <p>Belum punya akun? <a th:href="@{registrasi}">Daftar di sini</a></p>
