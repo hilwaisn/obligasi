@@ -1,5 +1,7 @@
 package com.hilwa.obligasi.service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,16 +37,16 @@ public class JournalService {
             Double kPenerbitanUtangObligasi = transaction.getNilaiNominal() * transaction.getLembarUtang();
             journal.setKPenerbitanUtangObligasi(kPenerbitanUtangObligasi);
             Double kPenerbitan = kPenerbitanUtangObligasi - dPenerbitanKas;
-            journal.setKPenerbitan(kPenerbitan);
+            journal.setKPenerbitanPremi(kPenerbitan);
 
-            Double dBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() * 6 / 12;
+            Double dBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
             journal.setDBayarBungaAwal(dBayarBungaAwal);
-            Double kBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() * 6 / 12;
+            Double kBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
             journal.setKBayarBungaAwal(kBayarBungaAwal);
 
-            Double dBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() * 6 / 12;
+            Double dBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
             journal.setDBayarBungaAkhir(dBayarBungaAkhir);
-            Double kBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() * 6 / 12;
+            Double kBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
             journal.setKBayarBungaAkhir(kBayarBungaAkhir);
 
             Double dAkhirTahun = dBayarBungaAwal
@@ -54,51 +56,55 @@ public class JournalService {
                     - ((kPenerbitan + kPenerbitanUtangObligasi) * transaction.getSukuBungaPasar());
             journal.setKAkhirTahun(kAkhirTahun);
 
-            Double dPelunasan=transaction.getNilaiNominal() * transaction.getLembarUtang()
-            * transaction.getKurs() / 100;
+            LocalDate tanggalTerbit = transaction.getTanggalTerbit().toLocalDate();
+            Integer jangkaWaktu = transaction.getJangkaWaktu();
+            LocalDate tanggalPelunasan = tanggalTerbit.plus(jangkaWaktu, ChronoUnit.YEARS);      
+            journal.setTanggalPelunasan(java.sql.Date.valueOf(tanggalPelunasan));
+
+            Double dPelunasan = kPenerbitanUtangObligasi;
             journal.setDPelunasan(dPelunasan);
-            Double kPelunasan = transaction.getNilaiNominal() * transaction.getLembarUtang()            
-            * transaction.getKurs() / 100;
+            Double dPelunasanPremi = kPenerbitan;
+            journal.setDPelunasanPremi(dPelunasanPremi);
+            Double kPelunasan = dPenerbitanKas;
             journal.setKPelunasan(kPelunasan);
 
         } else {
             Double dPenerbitanKas = transaction.getNilaiNominal() * transaction.getLembarUtang()
                     * transaction.getKurs() / 100;
             journal.setDPenerbitanKas(dPenerbitanKas);
-
             Double kPenerbitanUtangObligasi = transaction.getNilaiNominal() * transaction.getLembarUtang();
-            journal.setKPenerbitanUtangObligasi(kPenerbitanUtangObligasi);
-
             Double dPenerbitan = kPenerbitanUtangObligasi - dPenerbitanKas;
-            journal.setDPenerbitan(dPenerbitan);
+            journal.setDPenerbitanDiskon(dPenerbitan);
             Double kPenerbitan = kPenerbitanUtangObligasi - dPenerbitanKas;
-            journal.setKPenerbitan(kPenerbitan);
+            journal.setKPenerbitanUtangObligasi(kPenerbitan);
 
-            Double dBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() * 6 / 12;
+            Double dBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
             journal.setDBayarBungaAwal(dBayarBungaAwal);
-            Double kBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() * 6 / 12;
+            Double kBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
             journal.setKBayarBungaAwal(kBayarBungaAwal);
 
-            Double dBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() * 6 / 12;
+            Double dBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
             journal.setDBayarBungaAkhir(dBayarBungaAkhir);
-            Double kBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() * 6 / 12;
+            Double kBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
             journal.setKBayarBungaAkhir(kBayarBungaAkhir);
 
-            Double dAkhirTahun = dBayarBungaAwal
-                    - ((kPenerbitan + kPenerbitanUtangObligasi) * transaction.getSukuBungaPasar());
+            Double dAkhirTahun = dBayarBungaAwal - (dPenerbitanKas * transaction.getSukuBungaPasar());
             journal.setDAkhirTahun(dAkhirTahun);
-            Double kAkhirTahun = dBayarBungaAwal
-                    - ((kPenerbitan + kPenerbitanUtangObligasi) * transaction.getSukuBungaPasar());
+            Double kAkhirTahun = dBayarBungaAkhir - (dPenerbitanKas * transaction.getSukuBungaPasar());
             journal.setKAkhirTahun(kAkhirTahun);
 
-            Double dPelunasan=transaction.getNilaiNominal() * transaction.getLembarUtang()
-            * transaction.getKurs() / 100;
+            LocalDate tanggalTerbit = transaction.getTanggalTerbit().toLocalDate();
+            Integer jangkaWaktu = transaction.getJangkaWaktu();
+            LocalDate tanggalPelunasan = tanggalTerbit.plus(jangkaWaktu, ChronoUnit.YEARS);      
+            journal.setTanggalPelunasan(java.sql.Date.valueOf(tanggalPelunasan));
+
+            Double dPelunasan = kPenerbitanUtangObligasi;
             journal.setDPelunasan(dPelunasan);
-            Double kPelunasan = transaction.getNilaiNominal() * transaction.getLembarUtang()            
-            * transaction.getKurs() / 100;
+            Double kPelunasan = dPenerbitanKas;
             journal.setKPelunasan(kPelunasan);
+            Double kPelunasanDiskon = dPenerbitan;
+            journal.setKPelunasanDiskon(kPelunasanDiskon);
         }
         journal = journalRepository.save(journal);
         return journalRepository.findById(id).orElse(null);
-    }
-}
+    }}

@@ -6,6 +6,12 @@
     </head>
 
     <body>
+      <nav id="slide-nav" class="nav-bar">
+        <a th:href="@{/home}" class="nav-item">HOME</a>
+        <a th:href="@{/list-journal}" class="nav-item">JOURNAL</a>
+        <a th:href="@{/amortisasi}" class="nav-item">AMORTISASI</a>
+        <a th:href="@{/about}" class="nav-item">ABOUT</a>
+      </nav>
         <h1>Jurnal Perusahaan <td th:text="${journal.transaction.namaPerusahaan}"></td></h1>
         <div class="jurnal">
             <h2>Jurnal Penerbitan Obligasi</h2>
@@ -19,7 +25,7 @@
                     <th scope="col">  K. Utang Obligasi</th>
                     <td th:text="${journal.kPenerbitanUtangObligasi} "></td>
                     <th scope="col">  K. Premium Utang Obligasi</th>
-                    <td th:text="${journal.kPenerbitan} "></td>
+                    <td th:text="${journal.kPenerbitanPremi} "></td>
                   </div> 
                   <div th:unless="${journal.transaction.kurs > 100}"> 
                     <th scope="col">D. Diskonto Utang Obligasi</th>
@@ -71,19 +77,33 @@
                 </tbody>
               </table>
             </div>
-            <!-- <div class="jurnal">
+            <div class="jurnal">
               <h2>Jurnal Saat Pelunasan</h2>
               <table>
                 <tbody>
                   <tr th:each="journal : ${journal}">
-                    <th scope="col"></th>
-                    <td th:text="${journal.dPelunasan}"></td>
-                    <th scope="col"></th>
-                    <td th:text="${journal.kPelunasan}"></td>
+                    <div th:if="${journal.transaction.kurs > 100}"> 
+                      <td th:text="${journal.tanggalPelunasan}"></td>
+                      <th scope="col">D. Utang Obligasi</th>
+                      <td th:text="${journal.dPelunasan}"></td>
+                      <th scope="col">D. Premium Utang Obligasi</th>
+                      <td th:text="${journal.dPelunasanPremi}"></td>
+                      <th scope="col">  K. Kas</th>
+                      <td th:text="${journal.kPelunasan} "></td>
+                    </div>
+                    <div th:unless="${journal.transaction.kurs > 100}"> 
+                    </div>
+                    <td th:text="${journal.tanggalPelunasan}"></td>
+                      <th scope="col">D. Utang Obligasi</th>
+                      <td th:text="${journal.dPelunasan}"></td>
+                      <th scope="col">  K. Diskonto Utang Obligasi</th>
+                      <td th:text="${journal.kPelunasanDiskon}"></td>
+                      <th scope="col">  K. Kas</th>
+                      <td th:text="${journal.kPelunasan} "></td>
                   </tr>
                 </tbody>
               </table>
-            </div> -->
+            </div>
           </div>
     </body>
 </html>
