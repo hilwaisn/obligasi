@@ -6,11 +6,13 @@
 }
 
 body {
-  justify-content: center;
-  align-items: center;
   background-color: #daf1de;
   background-size: cover;
   background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 html {
@@ -22,13 +24,27 @@ header {
   background-color: #051f20;
   display: flex;
   align-items: center;
-  box-shadow: 0px 0px 20px #000;
   justify-content: space-around;
   overflow: hidden;
   position: sticky;
   top: 0;
   transition: 0.5s;
   z-index: 99;
+  padding: 10px 0;
+}
+
+.header-logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #daf1de;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.header-logo img {
+  width: 10px;
+  height: auto;
 }
 
 .nav-bar {

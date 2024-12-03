@@ -6,6 +6,17 @@
   </head>
 
   <body>
+    <header id="header">
+      <nav id="slide-nav" class="nav-bar">
+          <a th:href="@{/home}" class="nav-item">HOME</a>
+          <a th:href="@{/list-journal}" class="nav-item">JOURNAL</a>
+          <a th:href="@{/amortisasi}" class="nav-item">AMORTISASI</a>
+          <a th:href="@{/about}" class="nav-item">ABOUT</a>
+      </nav>
+      <div class="header-logo">
+          <a th:href="@{/home}"><img id="logo" th:src="@{/image/Logo Oblitrack.png}">OBLITRACK</a>
+      </div>
+    </header>
     <div class="jurnal">
       <table>
         <h1>Jurnal Penerbitan Obligasi</h1>
