@@ -39,14 +39,14 @@ public class JournalService {
             Double kPenerbitan = kPenerbitanUtangObligasi - dPenerbitanKas;
             journal.setKPenerbitanPremi(kPenerbitan);
 
-            Double dBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
+            Double dBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() / 2 * 6 / 12;
             journal.setDBayarBungaAwal(dBayarBungaAwal);
-            Double kBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
+            Double kBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() / 2 * 6 / 12;
             journal.setKBayarBungaAwal(kBayarBungaAwal);
 
-            Double dBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
+            Double dBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() / 2 * 6 / 12;
             journal.setDBayarBungaAkhir(dBayarBungaAkhir);
-            Double kBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
+            Double kBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() / 2 * 6 / 12;
             journal.setKBayarBungaAkhir(kBayarBungaAkhir);
 
             Double dAkhirTahun = dBayarBungaAwal
@@ -58,7 +58,7 @@ public class JournalService {
 
             LocalDate tanggalTerbit = transaction.getTanggalTerbit().toLocalDate();
             Integer jangkaWaktu = transaction.getJangkaWaktu();
-            LocalDate tanggalPelunasan = tanggalTerbit.plus(jangkaWaktu, ChronoUnit.YEARS);      
+            LocalDate tanggalPelunasan = tanggalTerbit.plus(jangkaWaktu, ChronoUnit.YEARS);
             journal.setTanggalPelunasan(java.sql.Date.valueOf(tanggalPelunasan));
 
             Double dPelunasan = kPenerbitanUtangObligasi;
@@ -78,14 +78,14 @@ public class JournalService {
             Double kPenerbitan = kPenerbitanUtangObligasi - dPenerbitanKas;
             journal.setKPenerbitanUtangObligasi(kPenerbitan);
 
-            Double dBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
+            Double dBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() / 2 * 6 / 12;
             journal.setDBayarBungaAwal(dBayarBungaAwal);
-            Double kBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
+            Double kBayarBungaAwal = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() / 2 * 6 / 12;
             journal.setKBayarBungaAwal(kBayarBungaAwal);
 
-            Double dBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
+            Double dBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() / 2 * 6 / 12;
             journal.setDBayarBungaAkhir(dBayarBungaAkhir);
-            Double kBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga()/2 * 6 / 12;
+            Double kBayarBungaAkhir = journal.getKPenerbitanUtangObligasi() * transaction.getBunga() / 2 * 6 / 12;
             journal.setKBayarBungaAkhir(kBayarBungaAkhir);
 
             Double dAkhirTahun = dBayarBungaAwal - (dPenerbitanKas * transaction.getSukuBungaPasar());
@@ -95,7 +95,7 @@ public class JournalService {
 
             LocalDate tanggalTerbit = transaction.getTanggalTerbit().toLocalDate();
             Integer jangkaWaktu = transaction.getJangkaWaktu();
-            LocalDate tanggalPelunasan = tanggalTerbit.plus(jangkaWaktu, ChronoUnit.YEARS);      
+            LocalDate tanggalPelunasan = tanggalTerbit.plus(jangkaWaktu, ChronoUnit.YEARS);
             journal.setTanggalPelunasan(java.sql.Date.valueOf(tanggalPelunasan));
 
             Double dPelunasan = kPenerbitanUtangObligasi;
@@ -107,4 +107,9 @@ public class JournalService {
         }
         journal = journalRepository.save(journal);
         return journalRepository.findById(id).orElse(null);
-    }}
+    }
+
+    public List<Journal> getAllJournal() {
+        return journalRepository.findAll();
+    }
+}

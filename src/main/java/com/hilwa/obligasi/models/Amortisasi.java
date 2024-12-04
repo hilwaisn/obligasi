@@ -15,14 +15,19 @@ public class Amortisasi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Date tanggalBayar;
+    private Date tanggalBayarBunga;
+    private Date tanggalBayarrBunga;
     private Double bungaDibayarkan;
     private Double bebanBunga;
     private Double amortisasiDiskonto;
-    private Double diskonBelumAmortisasi;
+    private Double yangBelumAmortisasi;
     private Double nilaiBukuObligasi;
     
     @ManyToOne
     @JoinColumn(name = "transaction_id", referencedColumnName = "id")
     private Transaction transaction;
+
+    @ManyToOne
+    @JoinColumn(name = "journal", referencedColumnName = "id")
+    private Journal journal;
 }

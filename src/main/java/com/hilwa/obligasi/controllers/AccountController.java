@@ -83,4 +83,8 @@ public class AccountController {
         return "redirect:/home";
     }
 
+    @GetMapping("about")
+    public String about() {
+        return "about";
+    }
 }
