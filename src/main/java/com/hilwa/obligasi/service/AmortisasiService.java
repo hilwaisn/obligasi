@@ -53,7 +53,7 @@ public class AmortisasiService {
                     amortisasi.setJournal(journal);
 
                     Double bungaDibayarkan = journal.getKBayarBungaAwal();
-                    amortisasi.setBungaDibayarkan(bungaDibayarkan);
+                    amortisasi.setBungaDibayarkan(bungaDibayarkan*2.0);
 
                     if (transaction.getBunga() > transaction.getSukuBungaPasar()) {
                         Double yangBelumAmortisasi = journal.getKPenerbitanPremi();
@@ -87,22 +87,22 @@ public class AmortisasiService {
                         LocalDate tanggalBayarrBunga = tableAmortisasis.isEmpty() ? tanggalBayarr
                                 : tanggalBayarr.plus(1, ChronoUnit.YEARS);
                         tableAmortisasi.setTanggalBayarrBunga(Date.valueOf(tanggalBayarrBunga));
-                        tableAmortisasi.setBungaDibayarkan(amortisasi.getBungaDibayarkan()*2.0);
+                        tableAmortisasi.setBungaDibayarkan(amortisasi.getBungaDibayarkan());
 
                         // Premium
                         if (transaction.getBunga() > transaction.getSukuBungaPasar()) {
 
                             // Beban Bunga
                             Double bebanBunga = tableAmortisasis.isEmpty()
-                                    ? (transaction.getBunga().floatValue() / 100.0) * amortisasi.getNilaiBukuObligasi()
-                                    : (transaction.getBunga().floatValue() / 100.0)
+                                    ? (transaction.getSukuBungaPasar().floatValue() / 100.0) * amortisasi.getNilaiBukuObligasi()
+                                    : (transaction.getSukuBungaPasar().floatValue() / 100.0)
                                             * tableAmortisasis.get(i - 1).getNilaiBukuObligasi();
                             tableAmortisasi.setBebanBunga(bebanBunga);
 
                             // Premi
                             Double aPremium = tableAmortisasis.isEmpty()
-                                    ? (amortisasi.getBungaDibayarkan() - tableAmortisasi.getBebanBunga())
-                                    : (amortisasi.getBungaDibayarkan() - tableAmortisasis.get(i - 1).getBebanBunga());
+                                    ? (amortisasi.getBungaDibayarkan()-tableAmortisasi.getBebanBunga())
+                                    : (amortisasi.getBungaDibayarkan()-tableAmortisasis.get(i - 1).getBebanBunga());
                             tableAmortisasi.setAmortisasiDiskonto(aPremium);
 
                             // Belum Amortisasi
@@ -114,9 +114,9 @@ public class AmortisasiService {
 
                             // Nilai Buku Obligasi
                             Double nilaiBuku = tableAmortisasis.isEmpty()
-                                    ? (journal.getKPenerbitanUtangObligasi() - tableAmortisasi.getYangBelumAmortisasi())
+                                    ? (journal.getKPenerbitanUtangObligasi() + tableAmortisasi.getYangBelumAmortisasi())
                                     : (journal.getKPenerbitanUtangObligasi()
-                                            - tableAmortisasis.get(i - 1).getYangBelumAmortisasi());
+                                            + tableAmortisasis.get(i - 1).getYangBelumAmortisasi());
                             tableAmortisasi.setNilaiBukuObligasi(nilaiBuku);
 
                             // Diskonto
@@ -124,18 +124,17 @@ public class AmortisasiService {
 
                             // Beban Bunga
                             Double bebanBunga = tableAmortisasis.isEmpty()
-                                    ? (transaction.getBunga().floatValue() / 100.0) * amortisasi.getNilaiBukuObligasi()
-                                    : (transaction.getBunga().floatValue() / 100.0)
+                                    ? (transaction.getSukuBungaPasar().floatValue() / 100.0) * amortisasi.getNilaiBukuObligasi()
+                                    : (transaction.getSukuBungaPasar().floatValue() / 100.0)
                                             * tableAmortisasis.get(i - 1).getNilaiBukuObligasi();
                             tableAmortisasi.setBebanBunga(bebanBunga);
 
                             // Diskonto
                             Double diskonto = tableAmortisasis.isEmpty()
-                                    ? (tableAmortisasi.getBebanBunga() - amortisasi.getBungaDibayarkan())
-                                    : (tableAmortisasis.get(i - 1).getBebanBunga() - amortisasi.getBungaDibayarkan());
+                                    ? (tableAmortisasi.getBebanBunga()-amortisasi.getBungaDibayarkan())
+                                    : (tableAmortisasis.get(i - 1).getBebanBunga()-amortisasi.getBungaDibayarkan());
                             tableAmortisasi.setAmortisasiDiskonto(diskonto);
 
-                            System.out.println("Hasilnya: " + amortisasi.getYangBelumAmortisasi());
                             // Belum Amortisasi
                             Double diskontoYangBelumDibayar = tableAmortisasis.isEmpty()
                                     ? (amortisasi.getYangBelumAmortisasi() - tableAmortisasi.getAmortisasiDiskonto())

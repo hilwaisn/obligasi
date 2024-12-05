@@ -1,5 +1,8 @@
 package com.hilwa.obligasi.controllers;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,9 +36,33 @@ public class TransactionController {
 
     @PostMapping("save-transaksi")
     public String saveTransaksi(@ModelAttribute("transaksi") Transaction transactions) {
-        transactionService.save(transactions);
+        if (validateTanggal(transactions.getTanggalBayar(), transactions.getTanggalBayarr(),
+                transactions.getTanggalTerbit()))
+            return "redirect:/add-transactions";
+        else
+            transactionService.save(transactions);
         return "redirect:/home";
     }
+
+    private boolean validateTanggal(Date tanggalBayar, Date tanggalBayarr, Date tanggalTerbit) {
+        if (tanggalBayar == null || tanggalBayarr == null || tanggalTerbit == null) {
+            return false;
+        }
+    
+        LocalDate now = LocalDate.now(ZoneId.systemDefault());
+        LocalDate bayar = tanggalBayar.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate bayarr = tanggalBayarr.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate terbit = tanggalTerbit.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    
+        if (bayar.getYear() != now.getYear() || bayarr.getYear() != now.getYear() || terbit.getYear() != now.getYear()) {
+            return false;
+        }
+    
+        long monthsDifference = java.time.temporal.ChronoUnit.MONTHS.between(bayar, bayarr);
+    
+        return monthsDifference == 6;
+    }
+    
 
     @GetMapping("/delete-transaction/{id}")
     public String deleteTransaksi(@PathVariable("id") Integer id) {

@@ -30,6 +30,13 @@ body {
 body h1 {
   padding-top: 10x;
 }
+body p {
+  text-align: justify;
+  margin: 20px;
+  line-height: 1.5;
+  font-size: 16px;
+  color: #333;
+}
 
 header {
   width: 100%;

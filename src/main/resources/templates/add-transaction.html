@@ -25,6 +25,8 @@
         type="text"
         placeholder="Masukkan nama perusahaan"
         th:field="${transaction.namaPerusahaan}"
+        required
+        pattern="[A-Za-z0-9\s]+"
       />
       <br />
       <label>Tanggal Penerbitan :</label>
@@ -32,20 +34,25 @@
         type="date"
         placeholder="Masukkan tanggal penerbitan"
         th:field="${transaction.tanggalTerbit}"
+        required
       />
       <br />
       <label>Nilai Nominal :</label>
       <input
-        type="text"
+        type="number"
         placeholder="Masukkan nilai nominal"
         th:field="${transaction.nilaiNominal}"
+        required
+        pattern="[0-9]+"
       />
       <br />
       <label>Lembar Utang :</label>
       <input
-        type="text"
+        type="number"
         placeholder="Masukkan lembar utang"
         th:field="${transaction.lembarUtang}"
+        required
+        pattern="[0-9]+"
       />
       <br />
       <label>Bunga(dalam persen) :</label>
@@ -53,23 +60,29 @@
         type="number"
         placeholder="Masukkan bunga"
         th:field="${transaction.bunga}"
+        required
+        pattern="[0-9]+"
       />
       <br />
       <label>Tanggal Bayar Bunga :</label>
-      <input type="date" th:field="${transaction.tanggalBayar}" /> <br />
-      <input type="date" th:field="${transaction.tanggalBayarr}" /> <br />
+      <input type="date" th:field="${transaction.tanggalBayar}" required /> <br />
+      <input type="date" th:field="${transaction.tanggalBayarr}" required /> <br />
       <label>Jangka Waktu(tahun) :</label>
       <input
-        type="text"
+        type="number"
         placeholder="Masukkan jangka waktu"
         th:field="${transaction.jangkaWaktu}"
+        required
+        pattern="[0-9]+"
       />
       <br />
       <label>Kurs :</label>
       <input
-        type="text"
+        type="number"
         placeholder="Masukkan kurs"
         th:field="${transaction.kurs}"
+        required
+        pattern="[0-9]+"
       />
       <br />
       <label>Suku Bunga Pasar(dalam persen) :</label>
@@ -77,13 +90,17 @@
         type="number"
         placeholder="Masukkan suku bunga pasar"
         th:field="${transaction.sukuBungaPasar}"
+        required
+        pattern="[0-9]+"
       />
       <br />
       <label>Harga Penerbitan :</label>
       <input
-        type="text"
+        type="number"
         placeholder="Masukkan harga penerbitan"
         th:field="${transaction.hargaPenerbitan}"
+        required
+        pattern="[0-9]+"
       />
       <br />
       <button type="submit" class="ujung">Simpan</button> <br />
