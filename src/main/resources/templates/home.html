@@ -47,6 +47,7 @@
           <th scope="col">Lembar Utang</th>
           <th scope="col">Bunga</th>
           <th scope="col">Tanggal Bayar Bunga</th>
+          <th scope="col">Tanggal Bayar Bunga</th>
           <th scope="col">Jangka Waktu</th>
           <th scope="col">Kurs</th>
           <th scope="col">Suku Bunga Pasar</th>
@@ -56,7 +57,7 @@
           <td th:text="${transaction.id}"></td>
           <td th:text="${transaction.namaPerusahaan}"></td>
           <td th:text="${transaction.tanggalTerbit}"></td>
-          <td th:text="${transaction.nilaiNominal}"></td>
+          <td th:text="${#numbers.formatDecimal(transaction.nilaiNominal, 2, 'COMMA', 2, 'POINT')}"></td>
           <td th:text="${transaction.lembarUtang}"></td>
           <td th:text="${transaction.bunga}"></td>
           <td th:text="${transaction.tanggalBayar}"></td>
@@ -64,7 +65,7 @@
           <td th:text="${transaction.jangkaWaktu}"></td>
           <td th:text="${transaction.kurs}"></td>
           <td th:text="${transaction.sukuBungaPasar}"></td>
-          <td th:text="${transaction.hargaPenerbitan}"></td>
+          <td th:text="${#numbers.formatDecimal(transaction.hargaPenerbitan, 2, 'COMMA', 2, 'POINT')}"></td>
           <td>
             <a
               th:href="@{/update-transaction/{id}(id=${transaction.id})}"

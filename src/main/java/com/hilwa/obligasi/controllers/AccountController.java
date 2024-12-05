@@ -33,8 +33,8 @@ public class AccountController {
         }
 
         // Validasi password
-        if (akun.getPassword().length() < 8 || akun.getPassword().length() > 10) {
-            model.addAttribute("passwordError", "Password harus antara 8 hingga 10 karakter.");
+        if (akun.getPassword().length() < 6 || akun.getPassword().length() > 10) {
+            model.addAttribute("passwordError", "Password harus antara 6 hingga 10 karakter.");
         }
 
         // Jika ada error pada validasi, kembalikan ke halaman registrasi
