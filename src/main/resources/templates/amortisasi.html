@@ -15,9 +15,69 @@
       </nav>
       <div class="header-logo">
         <a th:href="@{/home}"
-          ><img id="logo" th:src="@{/image/Logo Oblitrack.png}" />OBLITRACK</a>
+          ><img id="logo" th:src="@{/image/Logo Oblitrack.png}" />OBLITRACK</a
+        >
       </div>
     </header>
     <h1>Amortisasi</h1>
+    <div th:each="transaksi : ${amortisasis}" th:object="${transaksi}">
+      <h1 th:text="*{namaPerusahaan}"></h1>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Ke</th>
+            <th>Tanggal Pembayaran Bunga</th>
+            <th>Tanggal Pembayaran Bunga</th>
+            <th>Bunga Dibayarkan</th>
+            <th>Beban Bunga</th>
+            <th>Amortisasi Premium</th>
+            <th>Premium Yang Belum Diamortisai</th>
+            <th>Nilai Buku Obligasi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <div>
+            <tr th:each="amortisasi,n : *{amortisasis}">
+              <td th:text="${n.index+1}"></td>
+              <td th:text="${amortisasi.tanggalBayarBunga}"></td>
+              <td th:text="${amortisasi.tanggalBayarrBunga}"></td>
+              <td
+                th:text="${#numbers.formatDecimal(amortisasi.bungaDibayarkan, 2, 'COMMA', 2, 'POINT')}"
+              ></td>
+              <td
+                th:text="${#numbers.formatDecimal(amortisasi.bebanBunga, 2, 'COMMA', 2, 'POINT')}"
+              ></td>
+              <td
+                th:text="${#numbers.formatDecimal(amortisasi.amortisasiDiskonto, 2, 'COMMA', 2, 'POINT')}"
+              ></td>
+              <td
+                th:text="${#numbers.formatDecimal(amortisasi.yangBelumAmortisasi, 2, 'COMMA', 2, 'POINT')}"
+              ></td>
+              <td
+                th:text="${#numbers.formatDecimal(amortisasi.nilaiBukuObligasi, 2, 'COMMA', 2, 'POINT')}"
+              ></td>
+            <!-- </tr>
+            <tr>
+              <td th:if="${n.index + 1 < amortisasis.size()}" th:text="${amortisasis[n.index+1].tanggalBayarrBunga}"></td>
+              <td
+                th:text="${#numbers.formatDecimal(amortisasis[n.index+1].bungaDibayarkan, 2, 'COMMA', 2, 'POINT')}"
+              ></td>
+              <td
+                th:text="${#numbers.formatDecimal(amortisasis[n.index+1].bebanBunga, 2, 'COMMA', 2, 'POINT')}"
+              ></td>
+              <td
+                th:text="${#numbers.formatDecimal(amortisasis[n.index+1].amortisasiDiskonto, 2, 'COMMA', 2, 'POINT')}"
+              ></td>
+              <td
+                th:text="${#numbers.formatDecimal(amortisasis[n.index+1].yangBelumAmortisasi, 2, 'COMMA', 2, 'POINT')}"
+              ></td>
+              <td
+                th:text="${#numbers.formatDecimal(amortisasis[n.index+1].nilaiBukuObligasi, 2, 'COMMA', 2, 'POINT')}"
+              ></td>
+            </tr> -->
+          </div>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

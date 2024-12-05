@@ -34,8 +34,4 @@ public class Journal {
     @ManyToOne
     @JoinColumn(name = "transaction_id", referencedColumnName = "id")
     private Transaction transaction;
-
-    public void setTanggalPelunasan(Date tanggalPelunasan) {
-        this.tanggalPelunasan = tanggalPelunasan;
-    }
 }

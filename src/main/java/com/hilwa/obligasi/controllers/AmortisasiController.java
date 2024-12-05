@@ -17,6 +17,6 @@ public class AmortisasiController {
     public String amortisasi(Model model) {
         List<Amortisasi> amortisasis = amortisasiService.getAllAmortisasi();
         model.addAttribute("amortisasi", amortisasis);
-        return "amortisasi";
+        return amortisasiService.allAmortisasi(model);
     }
 }

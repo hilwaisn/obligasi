@@ -17,28 +17,28 @@
             <a th:href="@{/home}"><img id="logo" th:src="@{/image/Logo Oblitrack.png}">OBLITRACK</a>
         </div>
       </header>
-        <h1>Jurnal Perusahaan <td th:text="${journal.transaction.namaPerusahaan}"></td></h1>
+      <!-- <div th:each="journal : ${journal}"> -->
         <div class="jurnal">
             <h2>Jurnal Penerbitan Obligasi</h2>
             <table>
               <tbody>
-                <tr th:each="journal : ${journal}">
+                <tr>
                   <td th:text="${journal.transaction.tanggalTerbit}"></td>
                   <th scope="col">D. Kas</th>
-                  <td th:text="${journal.dPenerbitanKas} "></td>
-                  <div th:if="${journal.transaction.kurs > 100}"> 
-                    <th scope="col">  K. Utang Obligasi</th>
-                    <td th:text="${journal.kPenerbitanUtangObligasi} "></td>
-                    <th scope="col">  K. Premium Utang Obligasi</th>
-                    <td th:text="${journal.kPenerbitanPremi} "></td>
+                  <td th:text="${#numbers.formatDecimal(journal.dPenerbitanKas, 2, 'COMMA', 2, 'POINT')} "></td>
+                  <div th:if="${journal.transaction.bunga > journal.transaction.sukuBungaPasar}"> 
+                      <th scope="col">  K. Utang Obligasi</th>
+                      <td th:text="${#numbers.formatDecimal(journal.kPenerbitanUtangObligasi, 2, 'COMMA', 2, 'POINT')} "></td>
+                      <th scope="col">  K. Premium Utang Obligasi</th>
+                      <td th:text="${#numbers.formatDecimal(journal.kPenerbitanPremi, 2, 'COMMA', 2, 'POINT')} "></td>
                   </div> 
-                  <div th:unless="${journal.transaction.kurs > 100}"> 
-                    <th scope="col">D. Diskonto Utang Obligasi</th>
-                    <td th:text="${journal.dPenerbitan} "></td>
-                    <th scope="col">  K. Utang Obligasi</th>
-                    <td th:text="${journal.kPenerbitanUtangObligasi} "></td>
+                  <div th:unless="${journal.transaction.bunga > journal.transaction.sukuBungaPasar}"> 
+                      <th scope="col">D. Diskonto Utang Obligasi</th>
+                      <td th:text="${#numbers.formatDecimal(journal.dPenerbitan, 2, 'COMMA', 2, 'POINT')} "></td>
+                      <th scope="col">  K. Utang Obligasi</th>
+                      <td th:text="${#numbers.formatDecimal(journal.kPenerbitanUtangObligasi, 2, 'COMMA', 2, 'POINT')} "></td>
                   </div>
-                </tr>
+              </tr>            
               </tbody>
             </table>
             </div>
@@ -46,17 +46,17 @@
               <h2>Jurnal Pembayaran Bunga</h2>
               <table>
                 <tbody>
-                  <tr th:each="journal : ${journal}">
+                  <tr>
                     <td th:text="${journal.transaction.tanggalBayar}"></td>
                     <th scope="col">D. Beban Bunga</th>
-                    <td th:text="${journal.dBayarBungaAwal}"></td>
+                    <td th:text="${#numbers.formatDecimal(journal.dBayarBungaAwal, 2, 'COMMA', 2, 'POINT')}"></td>
                     <th scope="col">  K. Kas</th>
-                    <td th:text="${journal.kBayarBungaAwal}"></td>
+                    <td th:text="${#numbers.formatDecimal(journal.kBayarBungaAwal, 2, 'COMMA', 2, 'POINT')}"></td>
                     <td th:text="${journal.transaction.tanggalBayarr}"></td>
                     <th scope="col">D. Beban Bunga</th>
-                    <td th:text="${journal.dBayarBungaAkhir}"></td>
+                    <td th:text="${#numbers.formatDecimal(journal.dBayarBungaAkhir, 2, 'COMMA', 2, 'POINT')}"></td>
                     <th scope="col">  K. Kas</th>
-                    <td th:text="${journal.kBayarBungaAkhir}"></td>
+                    <td th:text="${#numbers.formatDecimal(journal.kBayarBungaAkhir, 2, 'COMMA', 2, 'POINT')}"></td>
                   </tr>
                 </tbody>
               </table>
@@ -65,18 +65,18 @@
               <h2>Jurnal Saat Akhir Tahun</h2>
               <table>
                 <tbody>
-                  <tr th:each="journal : ${journal}">
-                    <div th:if="${journal.transaction.kurs > 100}"> 
+                  <tr>
+                    <div th:if="${journal.transaction.bunga > journal.transaction.sukuBungaPasar}"> 
                       <th scope="col">D. Premium Utang Obligasi</th>
-                      <td th:text="${journal.dAkhirTahun}"></td>
+                      <td th:text="${#numbers.formatDecimal(journal.dAkhirTahun, 2, 'COMMA', 2, 'POINT')}"></td>
                       <th scope="col">  K. Beban Bunga</th>
-                      <td th:text="${journal.kAkhirTahun}"></td>
+                      <td th:text="${#numbers.formatDecimal(journal.kAkhirTahun, 2, 'COMMA', 2, 'POINT')}"></td>
                     </div>
-                    <div th:unless="${journal.transaction.kurs > 100}"> 
+                    <div th:unless="${journal.transaction.bunga > journal.transaction.sukuBungaPasar}"> 
                       <th scope="col">D. Beban Bunga </th>
-                      <td th:text="${journal.dAkhirTahun}"></td>
+                      <td th:text="${#numbers.formatDecimal(journal.dAkhirTahun, 2, 'COMMA', 2, 'POINT')}"></td>
                       <th scope="col">  K. Diskonto Utang Obligasi</th>
-                      <td th:text="${journal.kAkhirTahun}"></td>
+                      <td th:text="${#numbers.formatDecimal(journal.kAkhirTahun, 2, 'COMMA', 2, 'POINT')}"></td>
                       </div>
                   </tr>
                 </tbody>
@@ -86,29 +86,28 @@
               <h2>Jurnal Saat Pelunasan</h2>
               <table>
                 <tbody>
-                  <tr th:each="journal : ${journal}">
-                    <div th:if="${journal.transaction.kurs > 100}"> 
+                  <tr>
+                    <div th:if="${journal.transaction.bunga > journal.transaction.sukuBungaPasar}"> 
                       <td th:text="${journal.tanggalPelunasan}"></td>
                       <th scope="col">D. Utang Obligasi</th>
-                      <td th:text="${journal.dPelunasan}"></td>
+                      <td th:text="${#numbers.formatDecimal(journal.dPelunasan, 2, 'COMMA', 2, 'POINT')}"></td>
                       <th scope="col">D. Premium Utang Obligasi</th>
-                      <td th:text="${journal.dPelunasanPremi}"></td>
+                      <td th:text="${#numbers.formatDecimal(journal.dPelunasanPremi, 2, 'COMMA', 2, 'POINT')}"></td>
                       <th scope="col">  K. Kas</th>
-                      <td th:text="${journal.kPelunasan} "></td>
+                      <td th:text="${#numbers.formatDecimal(journal.kPelunasan, 2, 'COMMA', 2, 'POINT')} "></td>
                     </div>
-                    <div th:unless="${journal.transaction.kurs > 100}"> 
-                    </div>
+                    <div th:unless="${journal.transaction.bunga > journal.transaction.sukuBungaPasar}"> 
                     <td th:text="${journal.tanggalPelunasan}"></td>
                       <th scope="col">D. Utang Obligasi</th>
-                      <td th:text="${journal.dPelunasan}"></td>
+                      <td th:text="${#numbers.formatDecimal(journal.dPelunasan, 2, 'COMMA', 2, 'POINT')}"></td>
                       <th scope="col">  K. Diskonto Utang Obligasi</th>
-                      <td th:text="${journal.kPelunasanDiskon}"></td>
+                      <td th:text="${#numbers.formatDecimal(journal.kPelunasanDiskon, 2, 'COMMA', 2, 'POINT')}"></td>
                       <th scope="col">  K. Kas</th>
-                      <td th:text="${journal.kPelunasan} "></td>
+                      <td th:text="${#numbers.formatDecimal(journal.kPelunasan, 2, 'COMMA', 2, 'POINT')} "></td>
+                    </div>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </div>
     </body>
 </html>
