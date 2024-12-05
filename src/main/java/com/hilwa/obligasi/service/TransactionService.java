@@ -22,6 +22,7 @@ public class TransactionService {
     JournalRepository journalRepository;
 
     public void save(Transaction transaction) {
+        
         transactionRepository.save(transaction);
     }
 

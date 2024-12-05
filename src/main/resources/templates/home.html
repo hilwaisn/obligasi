@@ -1,74 +1,88 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <link th:href="@{/style.css}" rel="stylesheet" />
-    <head>
-        <title>Home</title>
-    </head>
-    <body>
-      <header id="header">
-        <nav id="slide-nav" class="nav-bar">
-            <a th:href="@{/home}" class="nav-item">HOME</a>
-            <a th:href="@{/list-journal}" class="nav-item">JOURNAL</a>
-            <a th:href="@{/amortisasi}" class="nav-item">AMORTISASI</a>
-            <a th:href="@{/about}" class="nav-item">ABOUT</a>
-        </nav>
-        <div class="header-logo">
-            <a th:href="@{/home}"><img id="logo" th:src="@{/image/Logo Oblitrack.png}">OBLITRACK</a>
-        </div>
-      </header>
-        <h1>Selamat Datang di ObliTrack</h1>
-        <div class="cari">
-          <div class="search"> 
-              <form th:action="@{/search-nama-perusahaan}" method="get"> 
-                  <input type="text" placeholder="Search by company name...." name="name"/> 
-                  <input type="submit" value="Cari" /> 
-              </form> 
-          </div> 
-          <a th:href="@{/sort-penerbitan-desc}"> 
-              <button>Desc Tanggal Terbit</button> 
-             </a> 
-          <a th:href="@{/sort-penerbitan-asc}"> 
-          <button>Asc Tanggal Terbit</button> 
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">Id</th>
-              <th scope="col">Nama Perusahaan</th>
-              <th scope="col">Tanggal Penerbitan</th>
-              <th scope="col">Nilai Nominal</th>
-              <th scope="col">Lembar Utang</th>
-              <th scope="col">Bunga</th>
-              <th scope="col">Tanggal Bayar Bunga</th>
-              <th scope="col">Jangka Waktu</th>
-              <th scope="col">Kurs</th>
-              <th scope="col">Suku Bunga Pasar</th>
-              <th scope="col">Harga Penerbitan</th>
-            </tr>
-            </thead>
-            <tbody>
-              <tr th:each="transaction : ${transaction}">
-                <td th:text="${transaction.id}"></td>
-                <td th:text="${transaction.namaPerusahaan}"></td>
-                <td th:text="${transaction.tanggalTerbit}"></td>
-                <td th:text="${transaction.nilaiNominal}"></td>
-                <td th:text="${transaction.lembarUtang}"></td>
-                <td th:text="${transaction.bunga}"></td>
-                <td th:text="${transaction.tanggalBayar}"></td>
-                <td th:text="${transaction.tanggalBayarr}"></td>
-                <td th:text="${transaction.jangkaWaktu}"></td>
-                <td th:text="${transaction.kurs}"></td>
-                <td th:text="${transaction.sukuBungaPasar}"></td>
-                <td th:text="${transaction.hargaPenerbitan}"></td>
-                <td>
-                  <a th:href="@{/update-transaction/{id}(id=${transaction.id})}" class="btn-primary"
-                    >Edit</a>
-                  <a th:href="@{/delete-transaction/{id}(id=${transaction.id})}" class="btn-warning"
-                    >Hapus</a>
-                  <a th:href="@{/journal/{id}(id=${transaction.id})}" class="btn-primary"
-                    >Lihat jurnal?</a>
-                </td>
-              </tr>
-            </tbody>
-        </table>
-    </body>
+  <link th:href="@{/style.css}" rel="stylesheet" />
+  <head>
+    <title>Home</title>
+  </head>
+  <body>
+    <header id="header">
+      <nav id="slide-nav" class="nav-bar">
+        <a th:href="@{/home}" class="nav-item">HOME</a>
+        <a th:href="@{/list-journal}" class="nav-item">JOURNAL</a>
+        <a th:href="@{/amortisasi}" class="nav-item">AMORTISASI</a>
+        <a th:href="@{/about}" class="nav-item">ABOUT</a>
+      </nav>
+      <div class="header-logo">
+        <a th:href="@{/home}"
+          ><img id="logo" th:src="@{/image/Logo Oblitrack.png}" />OBLITRACK</a
+        >
+      </div>
+    </header>
+    <h1>Selamat Datang di ObliTrack</h1>
+    <div class="search">
+      <form th:action="@{/search-nama-perusahaan}" method="get">
+        <input
+          type="text"
+          placeholder="Search by company name...."
+          name="name"
+        />
+        <input type="submit" value="Cari" />
+      </form>
+    </div>
+    <a th:href="@{/sort-penerbitan-desc}">
+      <button>Desc Tanggal Terbit</button>
+    </a>
+    <a th:href="@{/sort-penerbitan-asc}">
+      <button>Asc Tanggal Terbit</button>
+    </a>
+    <a th:href="@{/add-transaction}">
+      <button>Tambah Transaksi</button>
+    </a>
+    <table class="transaksi">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nama Perusahaan</th>
+          <th scope="col">Tanggal Penerbitan</th>
+          <th scope="col">Nilai Nominal</th>
+          <th scope="col">Lembar Utang</th>
+          <th scope="col">Bunga</th>
+          <th scope="col">Tanggal Bayar Bunga</th>
+          <th scope="col">Jangka Waktu</th>
+          <th scope="col">Kurs</th>
+          <th scope="col">Suku Bunga Pasar</th>
+          <th scope="col">Harga Penerbitan</th>
+        </tr>
+        <tr th:each="transaction : ${transaction}">
+          <td th:text="${transaction.id}"></td>
+          <td th:text="${transaction.namaPerusahaan}"></td>
+          <td th:text="${transaction.tanggalTerbit}"></td>
+          <td th:text="${transaction.nilaiNominal}"></td>
+          <td th:text="${transaction.lembarUtang}"></td>
+          <td th:text="${transaction.bunga}"></td>
+          <td th:text="${transaction.tanggalBayar}"></td>
+          <td th:text="${transaction.tanggalBayarr}"></td>
+          <td th:text="${transaction.jangkaWaktu}"></td>
+          <td th:text="${transaction.kurs}"></td>
+          <td th:text="${transaction.sukuBungaPasar}"></td>
+          <td th:text="${transaction.hargaPenerbitan}"></td>
+          <td>
+            <a
+              th:href="@{/update-transaction/{id}(id=${transaction.id})}"
+              class="btn-primary"
+              >Edit</a
+            >
+            <a
+              th:href="@{/delete-transaction/{id}(id=${transaction.id})}"
+              class="btn-warning"
+              >Hapus</a
+            >
+            <a
+              th:href="@{/journal/{id}(id=${transaction.id})}"
+              class="btn-primary"
+              >Lihat jurnal?</a
+            >
+          </td>
+        </tr>
+    </table>
+  </body>
 </html>

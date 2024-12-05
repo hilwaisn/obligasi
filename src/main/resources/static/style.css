@@ -1,3 +1,10 @@
+/* #051f20
+   #0b2b26
+   #163832
+   #235347
+   #8eb69b
+   #daf1de */
+
 * {
   margin: 0;
   padding: 0;
@@ -5,18 +12,23 @@
   font-family: "Poppins", sans-serif;
 }
 
-body {
-  background-color: #daf1de;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #8eb69b, #daf1de);
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  overflow: scroll;
+}
+
+body h1 {
+  padding-top: 10x;
 }
 
 header {
@@ -24,13 +36,18 @@ header {
   background-color: #051f20;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   position: sticky;
   top: 0;
   transition: 0.5s;
   z-index: 99;
-  padding: 10px 0;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
 }
 
 .header-logo a {
@@ -43,8 +60,16 @@ header {
 }
 
 .header-logo img {
-  width: 40px;
+  width: 210px;
   height: auto;
+  margin-right: 15px;
+  object-fit: fill;
+}
+
+.header-logo span {
+  font-size: 28px;
+  font-weight: bold;
+  color: #daf1de;
 }
 
 .nav-bar {
@@ -55,7 +80,7 @@ header {
   width: 16%;
   position: fixed;
   z-index: 1;
-  top: 22.4%;
+  top: 16.5%;
   left: 0;
   overflow-x: hidden;
 }
@@ -94,14 +119,37 @@ header {
   font-weight: bold;
 }
 
+.jurnal {
+  margin-top: 4px;
+}
+
+.jurnal table {
+  width: 100%;
+}
+
+.jurnal tr {
+  width: 50vw;
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  border-bottom: 1px solid #051f20;
+  margin: 4px 0;
+}
+
+.company {
+  border: 1px solid #000;
+  margin-top: 20px;
+}
+
 .wrapper {
   width: 400px;
-  background: #daf1de;
+  background: #fff;
   border-radius: 15px;
-  box-shadow: 0 8px 20px rgb #051f20;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   padding: 30px 20px;
   backdrop-filter: blur(10px);
   text-align: center;
+  margin-top: 50px;
 }
 
 .wrapper h1 {
@@ -116,7 +164,7 @@ header {
   position: relative;
 }
 
-.wrapper .pengingat{
+.wrapper .pengingat {
   position: relative;
 }
 
@@ -127,6 +175,7 @@ header {
   color: #235347;
   transition: all 0.3s ease;
   display: flex;
+  align-items: center;
   margin-top: 10px;
 }
 
@@ -157,6 +206,12 @@ header {
   font-size: 12px;
   margin-top: 5px;
   text-align: left;
+}
+
+.separator {
+  border: none;
+  border-top: 2px solid #235347;
+  margin: 20px 0;
 }
 
 .btn {
@@ -190,9 +245,53 @@ header {
   text-decoration: underline;
 }
 
-/* #051f20
-   #0b2b26
-   #163832
-   #235347
-   #8eb69b
-   #daf1de */
+
+.transaksi {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.transaksi th, .transaksi td {
+  font-size: 8px;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.transaksi th {
+  background-color: #2d3a3a;
+  color: white;
+}
+
+.transaksi td {
+  background-color: #f9f9f9;
+}
+
+.transaksi td a {
+  padding: 5px 10px;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.transaksi td a.btn-primary {
+  background-color: #2d3a3a;
+}
+
+.transaksi td a.btn-warning {
+  background-color: #f39c12;
+}
+
+.transaksi td a:hover {
+  opacity: 0.8;
+}
+
+.transaksi td a.btn-primary:hover {
+  background-color: #4e5c5c;
+}
+
+.transaksi td a.btn-warning:hover {
+  background-color: #e67e22;
+}

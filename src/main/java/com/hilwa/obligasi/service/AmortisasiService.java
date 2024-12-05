@@ -54,15 +54,15 @@ public class AmortisasiService {
                 Double bungaDibayarkan = journal.getKBayarBungaAwal();
                 amortisasi.setBungaDibayarkan(bungaDibayarkan);
 
-                if (transaction.getKurs() > 100) {
+                if (transaction.getBunga() > transaction.getSukuBungaPasar()) {
                     Double yangBelumAmortisasi = journal.getKPenerbitanPremi();
                     amortisasi.setYangBelumAmortisasi(yangBelumAmortisasi);
-                    Double nilaiBukuObligasi = journal.getDPenerbitanKas();
+                    Double nilaiBukuObligasi = journal.getKPenerbitanUtangObligasi();
                     amortisasi.setNilaiBukuObligasi(nilaiBukuObligasi);
-                } else {
+                } else if (transaction.getBunga() < transaction.getSukuBungaPasar()) {
                     Double yangBelumAmortisasi = journal.getDPenerbitanDiskon();
                     amortisasi.setYangBelumAmortisasi(yangBelumAmortisasi);
-                    Double nilaiBukuObligasi = journal.getDPenerbitanDiskon();
+                    Double nilaiBukuObligasi = journal.getDPenerbitanKas();
                     amortisasi.setNilaiBukuObligasi(nilaiBukuObligasi);
                 }
 
@@ -72,13 +72,13 @@ public class AmortisasiService {
                 List<Amortisasi> tableAmortisasis = new ArrayList<>();
                 for (int i = 0; i < transaction.getJangkaWaktu(); i++) {
                     Amortisasi tableAmortisasi = new Amortisasi();
-                    
+
                     LocalDate tanggalBayar = tableAmortisasis.isEmpty() ? transaction.getTanggalBayar().toLocalDate()
                             : tableAmortisasis.get(i - 1).getTanggalBayarBunga().toLocalDate();
                     LocalDate tanggalBayarBunga = tableAmortisasis.isEmpty() ? tanggalBayar
                             : tanggalBayar.plus(1, ChronoUnit.YEARS);
                     tableAmortisasi.setTanggalBayarBunga(Date.valueOf(tanggalBayarBunga));
-    
+
                     LocalDate tanggalBayarr = tableAmortisasis.isEmpty() ? transaction.getTanggalBayarr().toLocalDate()
                             : tableAmortisasis.get(i - 1).getTanggalBayarrBunga().toLocalDate();
                     LocalDate tanggalBayarrBunga = tableAmortisasis.isEmpty() ? tanggalBayarr
@@ -86,24 +86,23 @@ public class AmortisasiService {
                     tableAmortisasi.setTanggalBayarrBunga(Date.valueOf(tanggalBayarrBunga));
                     tableAmortisasi.setBungaDibayarkan(amortisasi.getBungaDibayarkan());
 
-                    
-                    if (amortisasi.getYangBelumAmortisasi() != null && amortisasi.getNilaiBukuObligasi() != null) {
+                    // Premium
+                    if (transaction.getBunga() > transaction.getSukuBungaPasar()) {
 
                         // Beban Bunga
                         Double bebanBunga = tableAmortisasis.isEmpty()
-                                ? (transaction.getBunga().floatValue() / 100) * amortisasi.getNilaiBukuObligasi()
-                                : (transaction.getBunga().floatValue() / 100)
+                                ? (transaction.getBunga().floatValue() / 100.0) * amortisasi.getNilaiBukuObligasi()
+                                : (transaction.getBunga().floatValue() / 100.0)
                                         * tableAmortisasis.get(i - 1).getNilaiBukuObligasi();
                         tableAmortisasi.setBebanBunga(bebanBunga);
 
-                        // Diskonto
+                        // Premi
                         Double aPremium = tableAmortisasis.isEmpty()
                                 ? (amortisasi.getBungaDibayarkan() - tableAmortisasi.getBebanBunga())
                                 : (amortisasi.getBungaDibayarkan() - tableAmortisasis.get(i - 1).getBebanBunga());
                         tableAmortisasi.setAmortisasiDiskonto(aPremium);
+                        System.out.println(aPremium);
 
-
-                        System.out.println("Mana Lebih Besar: "+(amortisasi.getYangBelumAmortisasi() > tableAmortisasi.getAmortisasiDiskonto()));
                         // Belum Amortisasi
                         Double premiumYangBelum = tableAmortisasis.isEmpty()
                                 ? (amortisasi.getYangBelumAmortisasi() - tableAmortisasi.getAmortisasiDiskonto())
@@ -113,15 +112,45 @@ public class AmortisasiService {
 
                         // Nilai Buku Obligasi
                         Double nilaiBuku = tableAmortisasis.isEmpty()
-                                ? (journal.getKPenerbitanUtangObligasi() + tableAmortisasi.getYangBelumAmortisasi())
+                                ? (journal.getKPenerbitanUtangObligasi() - tableAmortisasi.getYangBelumAmortisasi())
                                 : (journal.getKPenerbitanUtangObligasi()
-                                        + tableAmortisasis.get(i - 1).getYangBelumAmortisasi());
+                                        - tableAmortisasis.get(i - 1).getYangBelumAmortisasi());
+                        tableAmortisasi.setNilaiBukuObligasi(nilaiBuku);
+
+                        // Diskonto
+                    } else {
+
+                        // Beban Bunga
+                        Double bebanBunga = tableAmortisasis.isEmpty()
+                                ? (transaction.getBunga().floatValue() / 100.0) * amortisasi.getNilaiBukuObligasi()
+                                : (transaction.getBunga().floatValue() / 100.0)
+                                        * tableAmortisasis.get(i - 1).getNilaiBukuObligasi();
+                        tableAmortisasi.setBebanBunga(bebanBunga);
+
+                        // Diskonto
+                        Double diskonto = tableAmortisasis.isEmpty()
+                                ? (tableAmortisasi.getBebanBunga() - amortisasi.getBungaDibayarkan())
+                                : (tableAmortisasis.get(i - 1).getBebanBunga() - amortisasi.getBungaDibayarkan());
+                        tableAmortisasi.setAmortisasiDiskonto(diskonto);
+
+                        System.out.println("Hasilnya: " + amortisasi.getYangBelumAmortisasi());
+                        // Belum Amortisasi
+                        Double diskontoYangBelumDibayar = tableAmortisasis.isEmpty()
+                                ? (amortisasi.getYangBelumAmortisasi() - tableAmortisasi.getAmortisasiDiskonto())
+                                : (tableAmortisasis.get(i - 1).getYangBelumAmortisasi()
+                                        - tableAmortisasi.getAmortisasiDiskonto());
+                        tableAmortisasi.setYangBelumAmortisasi(diskontoYangBelumDibayar);
+
+                        // Nilai Buku Obligasi
+                        Double nilaiBuku = tableAmortisasis.isEmpty()
+                                ? (journal.getKPenerbitanUtangObligasi() - tableAmortisasi.getYangBelumAmortisasi())
+                                : (journal.getKPenerbitanUtangObligasi()
+                                        - tableAmortisasis.get(i - 1).getYangBelumAmortisasi());
                         tableAmortisasi.setNilaiBukuObligasi(nilaiBuku);
                     }
 
                     tableAmortisasis.add(tableAmortisasi);
 
-                    
                 }
                 transaction.setAmortisasis(tableAmortisasis);
             }

@@ -19,13 +19,6 @@ public class JournalController {
     @Autowired
     TransactionService transactionService;
 
-    // @GetMapping("journal")
-    // public String journal(Model model) {
-    //     List<Transaction> journals = transactionService.getAllTransaction();
-    //     model.addAttribute("journal", journals);
-    //     return "journal";
-    // }
-
     @GetMapping("/list-journal")
     public String listjournal(Model model) {
         List<Transaction> journals = transactionService.getAllTransaction();
